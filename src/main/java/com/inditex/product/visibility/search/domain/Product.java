@@ -1,11 +1,12 @@
 package com.inditex.product.visibility.search.domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -27,21 +28,16 @@ public class Product {
 	private List<Size> sizes = new ArrayList<>();
 	
 	@Transient
-	private Map<Boolean,List<Size>> sizesByType = new HashMap<>();
+	private Set<Size> specialSizes = new HashSet<>();
 	
 	@Transient
-	private List<Size> specialSizes = new ArrayList<>();
-	
-	@Transient
-	private List<Size> ordinarySizes = new ArrayList<>();
+	private Set<Size> ordinarySizes = new HashSet<>();
 	
 	/**
 	 * Empty default constructor required by JPA
 	 */
 	public Product() {
 		super();
-		sizesByType.put(Boolean.TRUE, specialSizes);
-		sizesByType.put(Boolean.FALSE, ordinarySizes);
 	}
 
 	public Product(Long id, Integer sequence) {
@@ -52,18 +48,38 @@ public class Product {
 	
 	public void addSize(Size size) {
 		Assert.notNull(size,"Size cannot be null");
+		if(size.isSpecial()) {
+			specialSizes.add(size);
+		} else {
+			ordinarySizes.add(size);
+		}
 		sizes.add(size);
 		size.setProduct(this);
 	}
 	
 	public void removeSize(Size size) {
 		Assert.notNull(size,"Size cannot be null");
+		if(size.isSpecial()) {
+			specialSizes.remove(size);
+		} else {
+			ordinarySizes.remove(size);
+		}
 		sizes.remove(size);
 		size.setProduct(null);
 	}
 	
 	public boolean isSearchable() {
-		return !sizes.isEmpty() && sizes.stream().anyMatch(size -> size.isSearchable());
+		return !sizes.isEmpty() && 
+				(CollectionUtils.isEmpty(specialSizes) || specialSizes.stream().anyMatch(size -> size.isSearchable())) &&
+				ordinarySizes.stream().anyMatch(size -> size.isSearchable());
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public Integer getSequence() {
+		return sequence;
+	}
+	
 }
