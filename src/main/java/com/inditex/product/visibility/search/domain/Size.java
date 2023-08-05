@@ -22,29 +22,62 @@ public class Size {
 	@NotNull
 	private boolean special;
 	
-	
+	@NotNull
 	private Stock stock;
 	
+	public static class Builder {
+		
+		// Required value for builder
+		private final Product product;
+		
+		// Default values for builder
+		private boolean backSoon = false;
+		private boolean special = false;
+		private Stock stock = new Stock(0);
+		
+		
+		public Builder(Product product) {
+			this.product = product;
+		}
+		
+		public Builder backSoon(boolean backSoon) {
+			this.backSoon = backSoon;
+			return this;
+		}
+		
+		public Builder special(boolean special) {
+			this.special = special;
+			return this;
+		}
+		
+		public Builder stock(Stock stock) {
+			this.stock = stock;
+			return this;
+		}
+		
+		public Size build() {
+			return new Size(this);
+		}
+	}
 	
 	/**
-	 * Empty default constructor required by JPA
+	 * Required by JPA
 	 */
-	public Size() {
+	protected Size() {
 		super();
 	}
-
-	public Size(Long id, Product product, boolean backSoon, boolean special) {
-		super();
-		this.id = id;
-		this.product = product;
-		this.backSoon = backSoon;
-		this.special = special;
+	
+	private Size(Builder builder) {
+		product = builder.product;
+		backSoon = builder.backSoon;
+		special = builder.special;
+		stock = builder.stock;
 	}
 
 	public Product getProduct() {
 		return product;
 	}
-
+	
 	public void setProduct(Product product) {
 		this.product = product;
 	}
@@ -52,11 +85,5 @@ public class Size {
 	public Stock getStock() {
 		return stock;
 	}
-
-	public void setStock(Stock stock) {
-		this.stock = stock;
-	}
-	
-	
 
 }

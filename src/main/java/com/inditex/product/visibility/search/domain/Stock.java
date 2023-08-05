@@ -11,4 +11,13 @@ public class Stock {
 	@Column(nullable=false)
 	private Integer quantity;
 	
+	public Stock() {
+		super();
+	}
+
+	public Stock(Integer quantity) {
+		super();
+		this.quantity = quantity;
+	}
+	
 }
