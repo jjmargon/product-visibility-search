@@ -31,6 +31,7 @@ public class Size {
 		private final Product product;
 		
 		// Default values for builder
+		private Long id;
 		private boolean backSoon = false;
 		private boolean special = false;
 		private Stock stock = new Stock(0);
@@ -38,6 +39,11 @@ public class Size {
 		
 		public Builder(Product product) {
 			this.product = product;
+		}
+		
+		public Builder id(Long id) {
+			this.id = id;
+			return this;
 		}
 		
 		public Builder backSoon(boolean backSoon) {
@@ -72,6 +78,7 @@ public class Size {
 		backSoon = builder.backSoon;
 		special = builder.special;
 		stock = builder.stock;
+		id = builder.id;
 	}
 
 	public Product getProduct() {
@@ -88,6 +95,10 @@ public class Size {
 	
 	public boolean isBackSoon() {
 		return backSoon;
+	}
+	
+	public boolean isSpecial() {
+		return special;
 	}
 
 	public boolean hasStock() {
