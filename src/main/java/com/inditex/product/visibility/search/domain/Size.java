@@ -86,12 +86,20 @@ public class Size {
 		return stock;
 	}
 	
+	public boolean isBackSoon() {
+		return backSoon;
+	}
+
 	public boolean hasStock() {
 		boolean hasStock = false;
 		if(stock != null) {
 			hasStock = stock.getQuantity() > 0;
 		}
 		return hasStock;
+	}
+	
+	public boolean isSearchable() {
+		return backSoon || hasStock();
 	}
 
 }

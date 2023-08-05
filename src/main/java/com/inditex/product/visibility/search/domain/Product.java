@@ -3,8 +3,6 @@ package com.inditex.product.visibility.search.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.NotImplementedException;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -46,10 +44,8 @@ public class Product {
 		size.setProduct(null);
 	}
 	
-	public boolean hasStock() {
-		return !sizes.isEmpty() && sizes.stream().allMatch(size -> size.hasStock());
+	public boolean isSearchable() {
+		return !sizes.isEmpty() && sizes.stream().anyMatch(size -> size.isSearchable());
 	}
-	
-	
 
 }
