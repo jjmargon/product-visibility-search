@@ -85,5 +85,13 @@ public class Size {
 	public Stock getStock() {
 		return stock;
 	}
+	
+	public boolean hasStock() {
+		boolean hasStock = false;
+		if(stock != null) {
+			hasStock = stock.getQuantity() > 0;
+		}
+		return hasStock;
+	}
 
 }

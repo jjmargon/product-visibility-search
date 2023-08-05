@@ -9,15 +9,18 @@ public class Stock {
 	
 	@NotNull
 	@Column(nullable=false)
-	private Integer quantity;
+	private int quantity;
 	
 	public Stock() {
 		super();
 	}
 
-	public Stock(Integer quantity) {
+	public Stock(int quantity) {
 		super();
 		this.quantity = quantity;
 	}
-	
+
+	public int getQuantity() {
+		return quantity;
+	}
 }

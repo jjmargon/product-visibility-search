@@ -47,7 +47,7 @@ public class Product {
 	}
 	
 	public boolean hasStock() {
-		throw new NotImplementedException();
+		return !sizes.isEmpty() && sizes.stream().allMatch(size -> size.hasStock());
 	}
 	
 	
