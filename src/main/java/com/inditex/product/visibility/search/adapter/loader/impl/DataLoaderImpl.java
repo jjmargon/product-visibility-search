@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.inditex.product.visibility.search.adapter.bbdd.ProductRepository;
 import com.inditex.product.visibility.search.adapter.bbdd.SizeRepository;
@@ -35,6 +36,7 @@ public class DataLoaderImpl implements DataLoader, ApplicationListener<Applicati
 	}
 	
 	@Override
+	@Transactional
 	public void initDataLoad() {
 		// Reads ProductRecords From CSV and save products in DDBB
 		List<ProductRecord> productRecords = csvDataLoader.loadProducts();
@@ -42,7 +44,7 @@ public class DataLoaderImpl implements DataLoader, ApplicationListener<Applicati
 				product -> productRepository.save(product)
 			);
 		
-		// Reads SizeRecords From CSV
+		// Reads Size and Stock Records From CSV
 		List<SizeRecord> sizeRecords = csvDataLoader.loadSizes();
 		List<StockRecord> stockRecords = csvDataLoader.loadStocks();
 		
@@ -51,8 +53,9 @@ public class DataLoaderImpl implements DataLoader, ApplicationListener<Applicati
 				Optional<Product> product = productRepository.findById(rec.productId());
 				Size size = new Size.Builder(product.get()).stock(findStockRecord(rec.id(),stockRecords)).
 						id(rec.id()).backSoon(rec.backSoon()).special(rec.isSpecial()).build();
+				product.get().addSize(size);
 				return size;
-				}
+			}
 			
 		).forEach(size -> sizeRepository.save(size));
 		

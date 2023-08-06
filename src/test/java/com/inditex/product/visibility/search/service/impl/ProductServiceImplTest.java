@@ -19,7 +19,7 @@ public class ProductServiceImplTest {
 		List<Product> products = getProducts();
 		
 		// WHEN invoking the search filter service
-		ProductServiceImpl productService = new ProductServiceImpl();
+		ProductServiceImpl productService = new ProductServiceImpl(null);
 		List<Long> productIds = productService.productSearch(products);
 		
 		// THEN the List of Ids is the expected one

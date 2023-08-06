@@ -11,6 +11,7 @@ import org.springframework.util.CollectionUtils;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -27,7 +28,7 @@ public class Product {
 	@NotNull
 	private Integer sequence;
 	
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<Size> sizes = new ArrayList<>();
 	
 	@Transient
@@ -51,27 +52,24 @@ public class Product {
 	
 	public void addSize(Size size) {
 		Assert.notNull(size,"Size cannot be null");
-		if(size.isSpecial()) {
-			specialSizes.add(size);
-		} else {
-			ordinarySizes.add(size);
-		}
 		sizes.add(size);
 		size.setProduct(this);
 	}
 	
 	public void removeSize(Size size) {
 		Assert.notNull(size,"Size cannot be null");
-		if(size.isSpecial()) {
-			specialSizes.remove(size);
-		} else {
-			ordinarySizes.remove(size);
-		}
 		sizes.remove(size);
 		size.setProduct(null);
 	}
 	
 	public boolean isSearchable() {
+		this.sizes.stream().forEach(size -> {
+			if(size.isSpecial()) {
+				specialSizes.add(size);
+			} else {
+				ordinarySizes.add(size);
+			}
+		});
 		return !sizes.isEmpty() && 
 				(CollectionUtils.isEmpty(specialSizes) || specialSizes.stream().anyMatch(size -> size.isSearchable())) &&
 				ordinarySizes.stream().anyMatch(size -> size.isSearchable());
