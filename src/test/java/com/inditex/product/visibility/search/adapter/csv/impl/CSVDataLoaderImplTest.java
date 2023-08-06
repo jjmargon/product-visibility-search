@@ -11,10 +11,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import com.inditex.product.visibility.search.adapter.csv.CSVDataLoader;
-import com.inditex.product.visibility.search.adapter.csv.impl.CSVDataLoaderImpl;
-import com.inditex.product.visibility.search.adapter.csv.impl.ProductRecord;
-import com.inditex.product.visibility.search.adapter.csv.impl.SizeRecord;
-import com.inditex.product.visibility.search.adapter.csv.impl.StockRecord;
 
 public class CSVDataLoaderImplTest {
 	
