@@ -1,12 +1,15 @@
 package com.inditex.product.visibility.search.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
+@Table(name="size")
 public class Size {
 	
 	@Id
@@ -17,12 +20,12 @@ public class Size {
 	private Product product;
 	
 	@NotNull
+	@Column(name="back_soon")
 	private boolean backSoon;
 	
 	@NotNull
 	private boolean special;
 	
-	@NotNull
 	private Stock stock;
 	
 	public static class Builder {
@@ -34,7 +37,7 @@ public class Size {
 		private Long id;
 		private boolean backSoon = false;
 		private boolean special = false;
-		private Stock stock = new Stock(0);
+		private Stock stock = null;
 		
 		
 		public Builder(Product product) {
