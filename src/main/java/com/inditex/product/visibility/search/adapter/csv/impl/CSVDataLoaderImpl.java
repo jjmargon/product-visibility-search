@@ -1,4 +1,4 @@
-package com.inditex.product.visibility.search.adapter.impl;
+package com.inditex.product.visibility.search.adapter.csv.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
-import com.inditex.product.visibility.search.adapter.CSVDataLoader;
+import com.inditex.product.visibility.search.adapter.csv.CSVDataLoader;
 
 @Component
 public class CSVDataLoaderImpl implements CSVDataLoader{
