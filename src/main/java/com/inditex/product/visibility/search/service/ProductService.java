@@ -6,8 +6,8 @@ import com.inditex.product.visibility.search.domain.Product;
 
 public interface ProductService {
 	
-	List<Long> productsWebFilter(List<Product> products);
+	List<Product> productsWebFilter(List<Product> products);
 	
-	List<Long> productsWebFilter();
+	List<Product> productsWebFilter();
 
 }
