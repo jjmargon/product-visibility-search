@@ -66,9 +66,9 @@ Se  han  considerado  varias  opciones. Desde  un  enfoque  más  dinámico, de 
 Por último, para resolver el algoritmo principal de filtrado de productos para la web, se ha definido la interfaz *ProductService* con dos métodos sobrecargados:
 
  1. productSearch sin argumentos: llama al segundo método pasándole todos los productos existentes en la base de datos. Sirve esencialmente para probar el resultado esperado.
- 2. productSearch con argumento de la lista de productos que se desea filtrar: con la lista de productos del argumento, ejecuta la lógica de filtrado para obtener los ids de los productos que cumplen los requisitos solicitados.
+ 2. productSearch con argumento de la lista de productos que se desea filtrar: con la lista de productos del argumento, ejecuta la lógica de filtrado para obtener los productos que cumplen los requisitos solicitados.
 
-Con ayuda de los métodos ya existentes en los objetos principales de dominio Product y Size, la implementación de la lógica principal es bastante sencilla a partir del uso de *streams* de colecciones.
+Con ayuda de los métodos ya existentes en los objetos principales de dominio Product y Size, la implementación de la lógica principal es bastante sencilla a partir del uso de *streams* de colecciones de Java.
 
 ##### *Tests*
 
