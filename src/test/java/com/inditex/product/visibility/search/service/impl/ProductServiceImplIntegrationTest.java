@@ -22,7 +22,7 @@ class ProductServiceImplIntegrationTest {
 		// GIVEN the product service as in the application running with Spring
 
 		// WHEN invoking the product search method
-		List<Long> productIds = productService.productSearch();
+		List<Long> productIds = productService.productsWebFilter();
 
 		// THEN the List of Ids is the expected one
 		List<Long> expectedIds = List.of(5L, 1L, 3L);

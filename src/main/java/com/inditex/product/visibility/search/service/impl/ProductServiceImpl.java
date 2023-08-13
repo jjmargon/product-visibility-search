@@ -23,7 +23,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Long> productSearch(List<Product> products) {
+	public List<Long> productsWebFilter(List<Product> products) {
 		
 		return products.stream().filter(product -> product.isSearchable()).
 				sorted(comparing(Product::getSequence)).map(p -> p.getId()).toList();
@@ -31,8 +31,8 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional
-	public List<Long> productSearch() {
-		return productSearch(productRepository.findAll());
+	public List<Long> productsWebFilter() {
+		return productsWebFilter(productRepository.findAll());
 	}
 
 }

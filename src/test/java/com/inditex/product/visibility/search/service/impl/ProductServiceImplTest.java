@@ -20,7 +20,7 @@ public class ProductServiceImplTest {
 		
 		// WHEN invoking the search filter service
 		ProductServiceImpl productService = new ProductServiceImpl(null);
-		List<Long> productIds = productService.productSearch(products);
+		List<Long> productIds = productService.productsWebFilter(products);
 		
 		// THEN the List of Ids is the expected one
 		List<Long> expectedIds = List.of(5L, 1L, 3L);
