@@ -1,5 +1,7 @@
 package com.inditex.product.visibility.search.domain;
 
+import java.util.List;
+
 public class ProductTestUtils {
 	
 	public static Product product5() {
@@ -59,6 +61,10 @@ public class ProductTestUtils {
 		product1.addSize(size12);
 		product1.addSize(size13);
 		return product1;
+	}
+	
+	public static List<Product> getVisibleProducts(){
+		return List.of(product5(), product1(), product3());
 	}
 
 }

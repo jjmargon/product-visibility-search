@@ -1,5 +1,6 @@
 package com.inditex.product.visibility.search.adapter.http;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +16,7 @@ public class ProductController {
 		this.productService = productService;
 	}
 	
-	@GetMapping(value="/products")
+	@GetMapping(value="/visibleProducts", produces = MediaType.TEXT_PLAIN_VALUE)
 	public String getVisibleProducts() {
 		
 		return ProductFormatter.format(productService.productsWebFilter());
