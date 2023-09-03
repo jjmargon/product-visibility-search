@@ -1,4 +1,5 @@
 
+
 # product-visibility-search
 
   
@@ -62,6 +63,16 @@ Se ha creado una interfaz *Data Loader*, cuya implementación (*DataLoaderImpl*)
 
 Se  han  considerado  varias  opciones. Desde  un  enfoque  más  dinámico, de  forma  que el input fuera  un JSON codificado  en Base64 para  ser  incluido  como _query parameter_ a uno  más  estático  que  permita  modificar  la  implementación  de  forma  más  sencilla sin impactar a los  clientes  del API. Esta  última  estrategia ha sido  la  adoptada.
 
+
+##### *Estructuras de datos*
+En la implementación de esta prueba, se han usado diferentes clases de estructuras de datos en los objetos de dominio.
+En general, suelo utilizar List como objetos de colección por tener una pequeña ventaja en rendimiento de operaciones (en condiciones generales) que los Set, aunque los Set son conveniente usarlos cuando por la lógica del algoritmo no se desea que haya objetos repetidos contenidos en la colección.
+De esta forma, se ha seleccionado:
+
+ - Clase Product: una lista de objetos Size para mantener la relación OneToMany con esta propiedad (objeto). Internamente se usan también dos Sets de tallas para distinguir las "normales" de las "especiales" dentro de un mismo producto. Estos Sets son utilizados en el cálculo del algoritmo de visibilidad.
+
+El resto de objetos del dominio principal no usa colecciones de objetos.
+
 ##### *Lógica principal*
 Por último, para resolver el algoritmo principal de filtrado de productos para la web, se ha definido la interfaz *ProductService* con dos métodos sobrecargados:
 
@@ -70,9 +81,22 @@ Por último, para resolver el algoritmo principal de filtrado de productos para 
 
 Con ayuda de los métodos ya existentes en los objetos principales de dominio Product y Size, la implementación de la lógica principal es bastante sencilla a partir del uso de *streams* de colecciones de Java.
 
+##### *Complejidad temporal del algoritmo*- Posible mejora
+Honestamente, a lo largo de mi carrera nunca he tenido que estimar la complejidad temporal de un algoritmo o desarrollo en notación O, por lo que resulta complicado realizar una estimación de su eficiencia.
+En resumen, el algoritmo recorre los productos solicitados para determinar los que son visibles y esta lógica la realiza recorriendo sus tallas y determinando si el producto es visible o no en función de los requisitos establecidos.
+En cualquier caso, en este desarrollo se ha querido primar la facilidad de entendimiento (código limpio) sobre la eficiencia.
+Como mejora, *y de hecho sería la aplicabilidad de este algoritmo en un entorno real*, el desarrollo se ha realizado en base a la propuesta de los datos suministrados (datos estáticos). En un entorno real, los datos de stock y backsoon en las tallas estarían cambiando constantemente y posiblemente el algoritmo en este tipo de entorno debería modificarse para capturar estos cambios de datos al instante mediante eventos y un suscriptor de estos eventos sería un algoritmo similar al desarrollado en este ejercicio que lleve ya el resultado de si un producto es visible o no a un modelo de persistencia (BBDD), de forma que a la hora de consultar que productos son visibles o no, no hay que realizar ningún cálculo en ese momento, sino simplemente interpretar los datos previamente calculados y almacenados por el algoritmo en la gestión del evento. Esa sería una mejora clara del algoritmo de forma que fuera más reutilizable en un entorno productivo con los datos de stock y backsoon en constante modificación.
+
+##### *API Rest*
+
+El ejercicio incluye una interfaz HTTP en forma de API REST a partir de la URL /visibleProducts.
+**NOTA**: este API dista mucho en su definición de cómo sería en un desarrollo real. En un API real, posiblemente el endpoint sería /products junto con uno o varios parámetros que pudieran definir que se quiere solo obtener los productos visibles. Por otro lado, ni siquiera el API devuelve un típico objeto JSON, sino que devuelve la respuesta en texto plano, tal y como está especificado en el ejercicio. Solo se ha incluido este endpoint como una forma manual (vía HTTP) para verificar que la lógica de negocio devuelve el String con los ids de productos visibles en el orden esperado.
+
+
 ##### *Tests*
 
 El código incluye algunos tests unitarios y de integración para probar los aspectos esenciales de la implementación.
+También incluye un test unitario del controlador (RestController) del API.
 
   
 
