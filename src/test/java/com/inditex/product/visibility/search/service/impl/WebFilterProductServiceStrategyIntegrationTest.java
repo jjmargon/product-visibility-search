@@ -9,21 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.inditex.product.visibility.search.domain.Product;
-import com.inditex.product.visibility.search.service.ProductService;
+import com.inditex.product.visibility.search.service.ProductFilterStrategy;
 
 @SpringBootTest
-class ProductServiceImplIntegrationTest {
+class WebFilterProductServiceStrategyIntegrationTest {
 	
 	@Autowired
-	private ProductService productService;
+	private ProductFilterStrategy productFilterStrategy;
 
 	@Test
 	void testProductSearchWithDataSavedInDB() {
 		
-		// GIVEN the product service as in the application running with Spring
+		// GIVEN the product service as in the application running
 
-		// WHEN invoking the product search method
-		List<Product> productsFiltered = productService.productsWebFilter();
+		// WHEN invoking the product filter method with the defauly strategy
+		List<Product> productsFiltered = productFilterStrategy.productsWebFilter();
 
 		// THEN the List of Ids is the expected one
 		List<Long> expectedIds = List.of(5L, 1L, 3L);

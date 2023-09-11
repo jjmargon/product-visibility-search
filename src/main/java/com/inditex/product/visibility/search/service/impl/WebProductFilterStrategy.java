@@ -1,7 +1,6 @@
 package com.inditex.product.visibility.search.service.impl;
 
-import static java.util.Comparator.comparing;
-
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,29 +9,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.inditex.product.visibility.search.adapter.bbdd.ProductRepository;
 import com.inditex.product.visibility.search.domain.Product;
-import com.inditex.product.visibility.search.service.ProductService;
+import com.inditex.product.visibility.search.service.ProductFilterStrategy;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public class WebProductFilterStrategy implements ProductFilterStrategy {
+
+private ProductRepository productRepository;
 	
-	private ProductRepository productRepository;
-	
-	public ProductServiceImpl(@Autowired ProductRepository productRepository) {
+	public WebProductFilterStrategy(@Autowired ProductRepository productRepository) {
 		super();
 		this.productRepository = productRepository;
 	}
 
 	@Override
-	public List<Product> productsWebFilter(List<Product> products) {
+	public List<Product> productsWebFilter(List<Product> products, Comparator<? super Product> productComparator) {
 		
 		return products.stream().filter(product -> product.isSearchable()).
-				sorted(comparing(Product::getSequence)).toList();
+				sorted(productComparator).toList();
 	}
 
 	@Override
 	@Transactional
 	public List<Product> productsWebFilter() {
-		return productsWebFilter(productRepository.findAll());
+		return productsWebFilter(productRepository.findAll(), (product1, product2) -> product1.getSequence().compareTo(product2.getSequence()));
 	}
 
 }

@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.inditex.product.visibility.search.domain.ProductTestUtils;
-import com.inditex.product.visibility.search.service.ProductService;
+import com.inditex.product.visibility.search.service.ProductFilterContext;
 
 @SpringBootTest
 public class ProductControllerTest {
@@ -27,12 +27,12 @@ public class ProductControllerTest {
 	private WebApplicationContext webApplicationContext;
 	
 	@MockBean
-	private ProductService productService;
+	private ProductFilterContext productFilterContext;
 	
 	@BeforeEach
 	void setUp() {
 		this.mockMvc = webAppContextSetup(webApplicationContext).build();
-		when(productService.productsWebFilter()).thenReturn(ProductTestUtils.getVisibleProducts());
+		when(productFilterContext.productsWebFilter()).thenReturn(ProductTestUtils.getVisibleProducts());
 	}
 	
 	@Test

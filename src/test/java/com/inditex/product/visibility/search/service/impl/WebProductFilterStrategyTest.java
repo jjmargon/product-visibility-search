@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import com.inditex.product.visibility.search.domain.Product;
 import com.inditex.product.visibility.search.domain.ProductTestUtils;
 
-public class ProductServiceImplTest {
+public class WebProductFilterStrategyTest {
 	
 	@Test
 	void testProductsSearchable() {
@@ -18,8 +18,8 @@ public class ProductServiceImplTest {
 		List<Product> products = getProducts();
 		
 		// WHEN invoking the search filter service
-		ProductServiceImpl productService = new ProductServiceImpl(null);
-		List<Product> productsFiltered = productService.productsWebFilter(products);
+		WebProductFilterStrategy productService = new WebProductFilterStrategy(null);
+		List<Product> productsFiltered = productService.productsWebFilter(products, ProductTestUtils.getProductComparator());
 		
 		// THEN the List of Ids is the expected one
 		List<Product> expectedIds = List.of(ProductTestUtils.product5(),

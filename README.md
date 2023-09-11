@@ -74,10 +74,12 @@ De esta forma, se ha seleccionado:
 El resto de objetos del dominio principal no usa colecciones de objetos.
 
 ##### *Lógica principal*
-Por último, para resolver el algoritmo principal de filtrado de productos para la web, se ha definido la interfaz *ProductService* con dos métodos sobrecargados:
+Por último, para resolver el algoritmo principal de filtrado de productos para la web, se ha definido la interfaz *ProductFilterStrategy* con dos métodos sobrecargados:
 
- 1. productSearch sin argumentos: llama al segundo método pasándole todos los productos existentes en la base de datos. Sirve esencialmente para probar el resultado esperado.
- 2. productSearch con argumento de la lista de productos que se desea filtrar: con la lista de productos del argumento, ejecuta la lógica de filtrado para obtener los productos que cumplen los requisitos solicitados.
+ 1. productsWebFilter sin argumentos: llama al segundo método pasándole todos los productos existentes en la base de datos. Sirve esencialmente para probar el resultado esperado.
+ 2. productSearch con argumento de la lista de productos que se desea filtrar, así como el comparador de objetos que pueden contener uno de la clase Product. Dicho de otro modo, este segundo argumento es el criterio de ordenación de los productos.
+La clase WebProductFilterStrategy implementa la lógica de filtrado y ordenación de resultados a partir de los requisitos establecidos.
+Por otro lado, existe una clase ProductFilterContext que permitiría en el futuro definir una estrategia diferente (esto es, una implementación diferente de ProductFilterStrategy) sin modificar la interfaz de lógica principal.
 
 Con ayuda de los métodos ya existentes en los objetos principales de dominio Product y Size, la implementación de la lógica principal es bastante sencilla a partir del uso de *streams* de colecciones de Java.
 

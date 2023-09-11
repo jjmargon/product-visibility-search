@@ -1,5 +1,6 @@
 package com.inditex.product.visibility.search.domain;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class ProductTestUtils {
@@ -65,6 +66,10 @@ public class ProductTestUtils {
 	
 	public static List<Product> getVisibleProducts(){
 		return List.of(product5(), product1(), product3());
+	}
+	
+	public static Comparator<? super Product> getProductComparator(){
+		return (p1, p2) -> p1.getSequence().compareTo(p2.getSequence());
 	}
 
 }
