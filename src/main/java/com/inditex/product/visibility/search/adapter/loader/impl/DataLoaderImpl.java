@@ -38,13 +38,12 @@ public class DataLoaderImpl implements DataLoader, ApplicationListener<Applicati
 	@Override
 	@Transactional
 	public void initDataLoad() {
-		// Reads ProductRecords From CSV and save products in DDBB
+		
 		List<ProductRecord> productRecords = csvDataLoader.loadProducts();
 		productRecords.stream().map(rec -> new Product(rec.id(), rec.sequence())).forEach(
 				product -> productRepository.save(product)
 			);
 		
-		// Reads Size and Stock Records From CSV
 		List<SizeRecord> sizeRecords = csvDataLoader.loadSizes();
 		List<StockRecord> stockRecords = csvDataLoader.loadStocks();
 		

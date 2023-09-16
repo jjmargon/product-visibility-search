@@ -37,9 +37,6 @@ public class Product {
 	@Transient
 	private Set<Size> ordinarySizes = new HashSet<>();
 	
-	/**
-	 * Empty default constructor required by JPA
-	 */
 	public Product() {
 		super();
 	}

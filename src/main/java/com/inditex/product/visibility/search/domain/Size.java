@@ -30,10 +30,8 @@ public class Size {
 	
 	public static class Builder {
 		
-		// Required value for builder
 		private final Product product;
 		
-		// Default values for builder
 		private Long id;
 		private boolean backSoon = false;
 		private boolean special = false;
@@ -69,9 +67,6 @@ public class Size {
 		}
 	}
 	
-	/**
-	 * Required by JPA
-	 */
 	protected Size() {
 		super();
 	}
