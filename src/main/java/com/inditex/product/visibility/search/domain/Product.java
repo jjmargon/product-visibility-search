@@ -53,12 +53,6 @@ public class Product {
 		size.setProduct(this);
 	}
 	
-	public void removeSize(Size size) {
-		Assert.notNull(size,"Size cannot be null");
-		sizes.remove(size);
-		size.setProduct(null);
-	}
-	
 	public boolean isSearchable() {
 		this.sizes.stream().forEach(size -> {
 			if(size.isSpecial()) {
